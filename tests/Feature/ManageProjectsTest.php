@@ -8,32 +8,26 @@ use Tests\TestCase;
 use App\Models\Project;
 use App\Models\User;
 
-class ProjectsTest extends TestCase
+class ManageProjectsTest extends TestCase
 {    
     use WithFaker, RefreshDatabase;
 
-    public function test_gests_cannot_create_projects()
+    public function test_gests_cannot_manage_projects()
     {
-        $attributes = Project::factory()->raw();
-        $this->post('/projects', $attributes)->assertRedirect('login');        
-    }
-
-    public function test_guests_cannot_view_projects()
-    {
-        $this->get('/projects')->assertRedirect('login');        
-    }
-
-    public function test_guests_cannot_view_a_single_project()
-    {
-        $project = Project::factory()->create();
-        $this->get($project->path())->assertRedirect('login');  
-    }
+        $project = Project::factory()->create();    
+        $this->get('/projects')->assertRedirect('login');  
+        $this->get('/projects/create')->assertRedirect('login');  
+        $this->get($project->path())->assertRedirect('login');     
+        $this->post('/projects', $project->toArray())->assertRedirect('login');        
+    }   
 
     public function test_a_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
 
         $this->actingAs(User::factory()->create());
+
+        $this->get('/projects/create')->assertStatus(200);
 
         $attributes = [
             'title' => $this->faker->sentence,
