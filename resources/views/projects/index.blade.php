@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex items-center mb-4">
-        <h1 class="mr-auto">Project Management App</h1>
+    <div class="flex items-center mb-4">       
         <a href="/projects/create">New Project</a>
     </div>
     <ul>
