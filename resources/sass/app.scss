@@ -11,5 +11,12 @@
 // Bootstrap
 // @import 'bootstrap/scss/bootstrap';
 
+@layer components {
+    .button {
+        @apply bg-blue text-white no-underline rounded-lg px-5 py-2;
+        box-shadow: 0 2px 7px 0 #b0eaff;
+    }
+}
+
 
 

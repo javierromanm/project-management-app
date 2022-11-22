@@ -13,7 +13,8 @@ module.exports = {
       xl: '1440px',
     },
     colors: {
-      'blue': '#1fb6ff',
+      'blue': '#47cdff',
+      'blue-light': '#8ae2fe',
       'purple': '#7e5bef',
       'pink': '#ff49db',
       'orange': '#ff7849',
