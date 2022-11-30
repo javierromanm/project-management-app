@@ -32,7 +32,6 @@ class ManageProjectsTest extends TestCase
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
-
         ];
 
         $this->post('/projects', $attributes)->assertRedirect('/projects');
