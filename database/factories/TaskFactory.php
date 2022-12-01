@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 use App\Models\Task;
+use App\Models\Project;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
@@ -19,7 +20,8 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'body' => fake()->sentence
+            'body' => fake()->sentence,
+            'project_id' => Project::factory()
         ];
     }
 }
