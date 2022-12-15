@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Project;
 use App\Models\User;
+use Facades\Tests\Setup\ProjectFactory; 
 
 class ManageProjectsTest extends TestCase
 {    
@@ -49,29 +50,22 @@ class ManageProjectsTest extends TestCase
 
     public function test_a_user_can_view_a_project()
     {
-        $this->signIn();
-        $this->withoutExceptionHandling();
-        $project = Project::factory()->create(['owner_id' => auth()->user()->id]);
-        $this->get($project->path())
+        $project = ProjectFactory::create();  
+        $this->actingAs($project->owner)
+            ->get($project->path())
             ->assertSee($project->title)
             ->assertSee($project->description);
     }
 
     public function test_a_user_can_update_a_project()
     {        
-        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();   
 
-        $this->signIn();
+        $this->actingAs($project->owner)
+            ->patch($project->path(), $attributes = ['notes' => 'Changed'])
+            ->assertRedirect($project->path());
 
-        $project = Project::factory()->create(['owner_id' => auth()->user()->id]);       
-
-        $this->patch($project->path(), [
-            'notes' => 'Changed'
-        ])->assertRedirect($project->path());
-
-        $this->assertDatabaseHas('projects', [
-            'notes' => 'Changed'
-        ]);
+        $this->assertDatabaseHas('projects', $attributes);
 
         $this->get($project->path())
             ->assertSee('Changed');
