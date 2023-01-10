@@ -9,10 +9,13 @@ class Task extends Model
 {
     use HasFactory;
 
+    use RecordsActivity;
+
     protected $fillable = ['body', 'completed'];
 
     protected $touches = ['project'];
 
+    protected static $recordableEvents = ['created', 'deleted'];
 
     public function project()
     {
@@ -38,17 +41,5 @@ class Task extends Model
             'completed' => false
         ]);
         $this->recordActivity('incompleted_task');
-    }
-
-    public function activity()
-    {
-        return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    public function recordActivity($description) {
-        $this->activity()->create([
-            'project_id' => $this->project->id,
-            'description' => $description
-        ]);
-    }
+    }    
 }
