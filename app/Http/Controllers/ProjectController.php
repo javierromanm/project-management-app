@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateProjectRequest;
 class ProjectController extends Controller
 {
     public function index() {
-        $projects = auth()->user()->accessibleProjects;
+        $projects = auth()->user()->accessibleProjects();
         return view('projects.index', compact('projects'));
     }
 
