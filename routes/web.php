@@ -17,11 +17,8 @@ use App\Http\Controllers\ProjectInvitationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', [ProjectController::class, 'index']);
     Route::resource('/projects', ProjectController::class);
     Route::post('/projects/{project}/tasks', [ProjectTaskController::class, 'store']);
     Route::patch('/projects/{project}/tasks/{task}', [ProjectTaskController::class, 'update']);
